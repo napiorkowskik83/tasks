@@ -14,11 +14,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/task")
 public class TaskController {
 
-    @Autowired
-    private DbService service;
+    private final DbService service;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    private TaskMapper taskMapper;
+    public TaskController(DbService service, TaskMapper taskMapper) {
+        this.service = service;
+        this.taskMapper = taskMapper;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTasks")
     public List<TaskDto> getTasks() {
