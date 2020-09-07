@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/v1/trello")
@@ -22,8 +23,12 @@ public class TrelloController {
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
 
         trelloBoards.stream()
-                .filter(tBD -> !tBD.getName().equals(null) && !tBD.getId().equals(null) && tBD.getName().contains("Kodilla"))
+                .filter(getKodillaBoards())
                 .forEach(trelloBoardDto -> System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName()));
 
+    }
+
+    private Predicate<TrelloBoardDto> getKodillaBoards() {
+        return tBD -> tBD.getName() != null && tBD.getId() != null && tBD.getName().contains("Kodilla");
     }
 }
