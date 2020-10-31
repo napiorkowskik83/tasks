@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
@@ -65,10 +64,10 @@ public class TaskControllerTestSuite {
         mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id", is(ID_1.intValue())))
+                .andExpect(jsonPath("$[0].id", is(ID_1), Long.class))
                 .andExpect(jsonPath("$[0].title", is(TITLE_1)))
                 .andExpect(jsonPath("$[0].content", is(CONTENT_1)))
-                .andExpect(jsonPath("$[1].id", is(ID_2.intValue())))
+                .andExpect(jsonPath("$[1].id", is(ID_2), Long.class))
                 .andExpect(jsonPath("$[1].title", is(TITLE_2)))
                 .andExpect(jsonPath("$[1].content", is(CONTENT_2)));
     }
@@ -86,7 +85,7 @@ public class TaskControllerTestSuite {
         mockMvc.perform(get("/v1/task/getTask").contentType(MediaType.APPLICATION_JSON)
                 .param("taskId", String.valueOf(ID_1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(ID_1.intValue())))
+                .andExpect(jsonPath("$.id", is(ID_1), Long.class))
                 .andExpect(jsonPath("$.title", is(TITLE_1)))
                 .andExpect(jsonPath("$.content", is(CONTENT_1)));
     }
@@ -119,7 +118,7 @@ public class TaskControllerTestSuite {
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(ID_1.intValue())))
+                .andExpect(jsonPath("$.id", is(ID_1), Long.class))
                 .andExpect(jsonPath("$.title", is(TITLE_1)))
                 .andExpect(jsonPath("$.content", is(CONTENT_1)));
     }
