@@ -39,4 +39,17 @@ public class MailCreatorService {
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
+
+    public String buildTasksQuantityInfoEmail(String message) {
+
+        Context context = new Context();
+        context.setVariable("message", message);
+        context.setVariable("tasks_url", "http://localhost:8888/tasks_frontend");
+        context.setVariable("button", "visit website");
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("goodbye_message", "Best Regards,");
+        context.setVariable("is_friend", false);
+        context.setVariable("admin_config", adminConfig);
+        return templateEngine.process("mail/tasks-quantity-info-mail", context);
+    }
 }
